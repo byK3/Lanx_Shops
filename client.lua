@@ -23,13 +23,8 @@ Citizen.CreateThread(function()
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
 	end
-
-	while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(10)
-	end
-
-	ESX.PlayerData = ESX.GetPlayerData()
 end)
+
 function getItems()
     return Config.Items
 end
@@ -57,7 +52,8 @@ Citizen.CreateThread(function()
         local playerCoords = GetEntityCoords(PlayerPedId())
         for _, supermarket in pairs(supermarketBlips) do
             local blipCoords = GetBlipCoords(supermarket)
-            local distance = GetDistanceBetweenCoords(playerCoords, blipCoords, true)
+	    local distance = #(playerCoords - blipCoords)
+
 
             if distance < 10.0 then
                 ESX.ShowHelpNotification('اضغط ~INPUT_CONTEXT~ لفتح المتجر')
